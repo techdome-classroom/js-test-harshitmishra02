@@ -36,8 +36,8 @@ const romanToInt = function(inputRoman) {
         rl.close();
     });
 
-    romanToInt();
+  
 };
-
+  romanToInt();
 
 

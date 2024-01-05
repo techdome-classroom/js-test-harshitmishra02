@@ -1,25 +1,33 @@
 var isValid = function(s) {
-     
-   const openSymbols = [];
-    
-    for (let i = 0; i < inputString.length; i++) {
-        if (inputString[i] === '(' || inputString[i] === '{' || inputString[i] === '[') {
-            openSymbols.push(inputString[i]);
-        } else if (inputString[i] === ')' && openSymbols.length !== 0 && openSymbols[openSymbols.length - 1] === '(') {
-            openSymbols.pop();
-        } else if (inputString[i] === '}' && openSymbols.length !== 0 && openSymbols[openSymbols.length - 1] === '{') {
-            openSymbols.pop();
-        } else if (inputString[i] === ']' && openSymbols.length !== 0 && openSymbols[openSymbols.length - 1] === '[') {
-            openSymbols.pop();
+       const stack = [];
+    const brackets = {
+        '(': ')',
+        '{': '}',
+        '[': ']'
+    };
+
+    for (let char of s) {
+        if (brackets[char]) {
+            stack.push(char); 
         } else {
-            return false;
+            const topOfStack = stack.pop(); 
+
+            if (brackets[topOfStack] !== char) {
+                return false; 
+            }
         }
     }
-    
-    return openSymbols.length === 0;
-    
+
+    return stack.length === 0; 
 };
-
+const readline = require('readline');
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+rl.question('Enter a string with parentheses: ', function (inputString) {
+    const result = isValid(inputString);
+    console.log(`The string is${result ? '' : ' not'} valid.`);
+    rl.close();
+});
 module.exports = { isValid };
-
-
